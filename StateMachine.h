@@ -1,7 +1,8 @@
 #ifndef _StateMachine_H_
 #define _StateMachine_H_
-
+#include < assert.h>
 #include "State.h"
+ 
 template<class entity_type>
 class StateMachine{
 private:
@@ -21,5 +22,36 @@ public:
 	void SetCurrentState(State<entity_type>* s){ m_pCurrentState = s; }
 	void SetGlobalState(State<entity_type>* s){ m_pCurrentState = s; }
 	void SetPreviousState(State<entity_type>* s){ m_pCurrentState = s; }
+	
+	//调用这个来更新FSM
+	void Update()const{
+		//如果一个全局状态存在，调用他的执行方法
+		if (m_pGlobalState) m_pGlobalState->Execute(m_pOwner);
+		//对当前的状态相同
+		if (m_pCurrentState) m_pCurrentState->Execute(m_pOwner);
+	}
+	//改变到一个新状态
+	void ChangeState(State<entity_type>* pNewState){
+		assert(pNewState && "<StateMachine::ChangeState>:trying to change a null state");
+		m_pPreviousState = m_pCurrentState;
+
+		m_pCurrentState->Exit(m_pOwner);
+
+		m_pCurrentState = pNewState;
+
+		m_pCurrentState->Enter(m_pOwner);
+	}
+
+	//改变状态回到前一个状态
+	void ReverToPreviousState(){
+		ChangeState(m_pPreviousState);
+	}
+
+	State<entity_type>* CurrentState() const{ return m_pCurrentState; }
+	State<entity_type>* GlobalState() const{ return m_pGlobalState; }
+	State<entity_type>* PreviousState() const{ return m_pPreviousState; }
+
+	//如果当前的状态类型等于作为指正传递的类的类型，返回true
+	bool isInState(const State<entity_type>& st)const;
 };
 #endif
