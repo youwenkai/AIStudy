@@ -3,7 +3,7 @@
 
 enum locationType
 {
-	goldmine
+	goldmine,shock
 };
 
 

@@ -2,12 +2,13 @@
 #define _Miner_H_
 
 #include "BaseGameEntity.h"
-#include "State.h"
+#include "StateMachine.h"
+#include "MinerState.h"
 #include "Config.h"
 class Miner :public BaseGameEntity{
 private:
-	//指向一个状态实例的指针
-	State<Miner> * m_pCurrentState;
+	//指向一个stateMachine实例的指针
+	StateMachine<Miner> * m_pStateMachine;
 	//矿工当前所处的位置
 	locationType m_Location;
 	//矿工的包中装了多少天然金块
@@ -20,13 +21,29 @@ private:
 	int m_iFatigue;
 
 public:
-	Miner(int id);
-
+	Miner(int id) :m_Location(shock),
+		m_iGoldCarried(0),
+		m_iMoneyInBank(0),
+		m_iThirst(0),
+		m_iFatigue(0),
+		BaseGameEntity(id)
+	{
+		//建立stateMachine
+		m_pStateMachine = new StateMachine<Miner>(this);
+		m_pStateMachine->SetCurrentState(EnterMineAndDigForNugget::Instance());
+		m_pStateMachine->SetGlobalState(EnterMineAndDigForNugget::Instance());
+	}
+	~Miner(){
+		delete m_pStateMachine;
+		m_pStateMachine = nullptr;
+	}
 	//这是必须被执行的
-	void Update();
-	//这个方法改变当前的状态到一个新的状态
-	void ChangeState();
+	void Update(){
+		++m_iThirst;
+		m_pStateMachine->Update();
+	}
 
+	StateMachine<Miner>* GetFSM()const{ return m_pStateMachine; }
 public:
 	locationType Location()const{ return m_Location; }
 
