@@ -8,7 +8,7 @@ private:
 	
 	static int m_iNextValidId;
 
-	void SetId(int val);
+	void SetId(int id){m_id = id;};
 
 public:
 

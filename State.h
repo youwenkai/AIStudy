@@ -1,7 +1,7 @@
 #ifndef _State_H_
 #define _State_H_
 
-class Miner;
+
 
 template<class entity_type>
 class State{

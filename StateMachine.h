@@ -15,9 +15,9 @@ private:
 
 public:
 	StateMachine(entity_type* owner) :m_pOwner(owner),
-		m_pCurrentState(NULL),
-		m_pPreviousState(NULL),
-		m_pGlobalState(NULL)
+		m_pCurrentState(nullptr),
+		m_pPreviousState(nullptr),
+		m_pGlobalState(nullptr)
 	{}
 	void SetCurrentState(State<entity_type>* s){ m_pCurrentState = s; }
 	void SetGlobalState(State<entity_type>* s){ m_pCurrentState = s; }

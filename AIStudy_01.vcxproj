@@ -78,6 +78,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="Miner.h" />
+    <ClInclude Include="MinerState.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Miner.cpp" />
+    <ClCompile Include="MinerState.cpp" />
+    <ClCompile Include="State.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

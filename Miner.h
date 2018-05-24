@@ -5,6 +5,16 @@
 #include "StateMachine.h"
 #include "MinerState.h"
 #include "Config.h"
+
+//the amount of gold a miner must have before he feels comfortable
+const int ComfortLevel = 5;
+//the amount of nuggets a miner can carry
+const int MaxNuggets = 3;
+//above this value a miner is thirsty
+const int ThirstLevel = 5;
+//above this value a miner is sleepy
+const int TirednessThreshold = 5;
+
 class Miner :public BaseGameEntity{
 private:
 	//指向一个stateMachine实例的指针
@@ -21,7 +31,7 @@ private:
 	int m_iFatigue;
 
 public:
-	Miner(int id) :m_Location(shock),
+	Miner(int id) :m_Location(shack),
 		m_iGoldCarried(0),
 		m_iMoneyInBank(0),
 		m_iThirst(0),
@@ -30,8 +40,8 @@ public:
 	{
 		//建立stateMachine
 		m_pStateMachine = new StateMachine<Miner>(this);
-		m_pStateMachine->SetCurrentState(EnterMineAndDigForNugget::Instance());
-		m_pStateMachine->SetGlobalState(EnterMineAndDigForNugget::Instance());
+		m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+		//m_pStateMachine->SetGlobalState(EnterMineAndDigForNugget::Instance());
 	}
 	~Miner(){
 		delete m_pStateMachine;
@@ -53,18 +63,44 @@ public:
 
 	void IncreaseFatigue(){ m_iFatigue++; }
 
-	bool PocketsFull(){
-		if (m_iGoldCarried > 10){
+	bool PocketsFull()const{
+		if (m_iGoldCarried > MaxNuggets){
 			return true;
 		}
 		return false;
 	}
-	bool Thirsty(){
-		if (m_iThirst > 5){
+	bool Thirsty()const{
+		if (m_iThirst > TirednessThreshold){
 			return true;
 		}
 		return false;
 	}
+	void IncreaseThirsty(){ m_iThirst++; }
+	void AddToWealth(int num){ m_iMoneyInBank += num; }
+	int Wealth()const{ return m_iMoneyInBank; }
+
+	int GoldCarried() const{ return m_iGoldCarried; }
+	void setGoldCarried(int num){ m_iGoldCarried = num; }
+
+	bool ComfortWealth() const{
+		if (m_iMoneyInBank >= ComfortLevel){
+			return true;
+		}
+		return false;
+	}
+
+	bool Fatigued()const
+	{
+		if (m_iFatigue > TirednessThreshold)
+		{
+			return true;
+		}
+
+		return false;
+	}
+	void DecreaseFatigue(){ m_iFatigue--; }
+
+	void BuyAndDrinkAWhiskey(){ m_iThirst = 0; m_iMoneyInBank -= 2; }
 };
 
 #endif
