@@ -4,9 +4,7 @@
 #include "map"
 #include "BaseGameEntity.h"
 
-
-
-#define EntityMgr EntityManager::Instance()
+//
 class EntityManager{
 private:
 	//存储实体
@@ -30,7 +28,7 @@ public:
 	//改方法从列表中移除实体
 	void RemoveEntity(BaseGameEntity* pEntity);
 };
-
+#define EntityMgr EntityManager::Instance()
 
 
 #endif

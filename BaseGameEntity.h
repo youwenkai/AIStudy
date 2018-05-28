@@ -1,5 +1,6 @@
 #ifndef _BaseGameEntity_H_
 #define _BaseGameEntity_H_
+#include "MessageStruct.h"
 
 class BaseGameEntity{
 private:
@@ -20,6 +21,9 @@ public:
 	virtual void Update() = 0;
 
 	int GetId()const{ return m_id; };
+
+	//所有的子类可以使用信息交流
+	virtual bool HandleMessage(const Telegram& msg) = 0;
 };
 
 

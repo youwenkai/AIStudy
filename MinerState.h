@@ -14,6 +14,7 @@ public:
 	virtual void Enter(Miner* pMiner);
 	virtual void Execute(Miner* pMiner);
 	virtual void Exit(Miner* pMiner);
+	virtual bool OnMessage(Miner* pMiner, const Telegram& telegram);
 };
 
 class VisitBankAndDepositGold :public State<Miner>{
@@ -27,6 +28,7 @@ public:
 	virtual void Enter(Miner* pMiner);
 	virtual void Execute(Miner* pMiner);
 	virtual void Exit(Miner* pMiner);
+	virtual bool OnMessage(Miner* pMiner, const Telegram& telegram);
 };
 
 
@@ -41,6 +43,7 @@ public:
 	virtual void Enter(Miner* pMiner);
 	virtual void Execute(Miner* pMiner);
 	virtual void Exit(Miner* pMiner);
+	virtual bool OnMessage(Miner* pMiner, const Telegram& telegram);
 };
 
 class QuenchThirst :public State<Miner>{
@@ -54,6 +57,7 @@ public:
 	virtual void Enter(Miner* pMiner);
 	virtual void Execute(Miner* pMiner);
 	virtual void Exit(Miner* pMiner);
+	virtual bool OnMessage(Miner* pMiner, const Telegram& telegram);
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include "StateMachine.h"
 #include "MinerState.h"
 #include "Config.h"
-
+#include "MessageStruct.h"
 //the amount of gold a miner must have before he feels comfortable
 const int ComfortLevel = 5;
 //the amount of nuggets a miner can carry
@@ -101,6 +101,10 @@ public:
 	void DecreaseFatigue(){ m_iFatigue--; }
 
 	void BuyAndDrinkAWhiskey(){ m_iThirst = 0; m_iMoneyInBank -= 2; }
+
+	bool HandleMessage(const Telegram& msg){
+		return m_pStateMachine->HandleMessage(msg);
+	}
 };
 
 #endif

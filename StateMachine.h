@@ -53,5 +53,17 @@ public:
 
 	//如果当前的状态类型等于作为指正传递的类的类型，返回true
 	bool isInState(const State<entity_type>& st)const;
+
+	bool HandleMessage(const Telegram& msg)const{
+		//首先看看当前的状态是否是有效的并且可以处理消息
+		if (m_pCurrentState && m_pCurrentState->OnMessage(m_pOwner, msg)){
+			return true;
+		}
+		//如果不是，且如果一个全局状态被执行，发送消息给全局状态
+		if (m_pGlobalState && m_pGlobalState->OnMessage(m_pOwner, msg)){
+			return true;
+		}
+		return false;
+	}
 };
 #endif

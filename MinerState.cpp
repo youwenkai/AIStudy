@@ -1,6 +1,8 @@
 #include "MinerState.h"
 #include "Config.h"
 #include "Miner.h"
+#include "MessageDispatcher.h"
+#include "MessageTypes.h"
 #include "iostream"
 
 
@@ -40,6 +42,9 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner){
 void EnterMineAndDigForNugget::Exit(Miner* pMiner){
 	std::cout << "\n" << GetNameOfEntity(pMiner->GetId()) << ":" << "有足够的金块，可以离开了！";
 }
+bool EnterMineAndDigForNugget::OnMessage(Miner* pMiner, const Telegram& telegram){
+	return false;
+}
 //======================================存钱状态=====================================//
 VisitBankAndDepositGold* VisitBankAndDepositGold::Instance(){
 	static VisitBankAndDepositGold instance;
@@ -69,6 +74,9 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner){
 void VisitBankAndDepositGold::Exit(Miner* pMiner){
 	std::cout << "\n" << GetNameOfEntity(pMiner->GetId()) << ": " << "离开银行!";
 }
+bool VisitBankAndDepositGold::OnMessage(Miner* pMiner, const Telegram& telegram){
+	return false;
+}
 //======================================回家状态=====================================//
 GoHomeAndSleepTilRested* GoHomeAndSleepTilRested::Instance(){
 	static GoHomeAndSleepTilRested instance;
@@ -79,6 +87,9 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner){
 	if (pMiner->Location() != shack){
 		std::cout << "\n" << GetNameOfEntity(pMiner->GetId()) << ":" << "走回家！";
 		pMiner->ChangeLocation(shack);
+
+		//让妻子知道我回家了
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, pMiner->GetId(), ent_Elsa, Msg_HiHoneyImHome, NO_ADDITIONAL_INFO);
 	}
 }
 void GoHomeAndSleepTilRested::Execute(Miner* pMiner){
@@ -94,6 +105,10 @@ void GoHomeAndSleepTilRested::Execute(Miner* pMiner){
 void GoHomeAndSleepTilRested::Exit(Miner* pMiner){
 	std::cout << "\n" << GetNameOfEntity(pMiner->GetId()) << ": " << "离开房屋！";
 }
+bool GoHomeAndSleepTilRested::OnMessage(Miner* pMiner, const Telegram& telegram){
+	return false;
+}
+
 //======================================口渴状态=====================================//
 QuenchThirst* QuenchThirst::Instance(){
 	static QuenchThirst instance;
@@ -121,4 +136,7 @@ void QuenchThirst::Execute(Miner* pMiner){
 }
 void QuenchThirst::Exit(Miner* pMiner){
 	std::cout << "\n" << GetNameOfEntity(pMiner->GetId()) << ": " << "离开酒吧...";
+}
+bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& telegram){
+	return false;
 }

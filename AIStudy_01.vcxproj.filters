@@ -33,6 +33,24 @@
     <ClInclude Include="StateMachine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MessageTypes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageDispatcher.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageStruct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WifeGlobalState.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MinerWife.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseGameEntity.cpp">
@@ -48,6 +66,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageDispatcher.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

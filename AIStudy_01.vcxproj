@@ -80,14 +80,22 @@
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="MessageDispatcher.h" />
+    <ClInclude Include="MessageStruct.h" />
+    <ClInclude Include="MessageTypes.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="MinerState.h" />
+    <ClInclude Include="MinerWife.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="WifeGlobalState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MessageDispatcher.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="MinerState.cpp" />
     <ClCompile Include="State.cpp" />
